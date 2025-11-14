@@ -15,6 +15,7 @@ from utils.db import engine, texts_engine
 from sqlmodel import Session
 from datetime import date, timedelta
 
+from py_ankiconnect import PyAnkiconnect
 
 
 
@@ -236,7 +237,9 @@ class SavedCardsScreen(Screen):
         super().__init__(id="saved-cards-screen")
         self.counter = 0 
         self.due_cards = []
-
+    
+    
+    BINDINGS = [("t", "toggle_cards", "Toggle Card Side")]
 
 
     def compose(self):
@@ -244,8 +247,8 @@ class SavedCardsScreen(Screen):
         yield Footer()
         
         with CenterMiddle(id="card_sides"):
-                yield Button("Card Front", id="card-front")
-                yield Button("Card Back", id="card-back")
+                yield Button("Card Front", id="card-front-btn")
+                yield Button("Card Back", id="card-back-btn")
         with CenterMiddle(id="switcher-cntr"):
             with ContentSwitcher(id="card_switcher", initial="card-front"):
                 yield Static(id="card-front")
@@ -260,8 +263,13 @@ class SavedCardsScreen(Screen):
             id="difficulties"
         )
         
-
-
+    def action_toggle_cards(self):
+        if self.query_one(ContentSwitcher).current == "card-front":
+            self.query_one(ContentSwitcher).current = "card-back"
+        else:
+            self.query_one(ContentSwitcher).current = "card-front"
+        self.refresh()
+        
     def save_cards(self,difficulty):
         if not self.due_cards:
             print("no cards to save")
@@ -316,11 +324,11 @@ class SavedCardsScreen(Screen):
         
 
 
-    @on(Button.Pressed, "#card-front")
+    @on(Button.Pressed, "#card-front-btn")
     def switch_front(self):
         self.query_one(ContentSwitcher).current = "card-front"
 
-    @on(Button.Pressed, "#card-back")
+    @on(Button.Pressed, "#card-back-btn")
     def switch_back(self):
         self.query_one(ContentSwitcher).current = "card-back"
 
@@ -402,7 +410,7 @@ class GenerateScreen(Screen):
 
 
 
-
+    
 
 
 

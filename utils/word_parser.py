@@ -12,10 +12,14 @@ class WordNode:
         self.unknown = unknown
         self.definition = definition
         self.reading = reading
+        
 
             
     def __repr__(self):
          return f"WordNode({self.word},{self.root_word},{self.definition})"
+         
+    
+        
 
 
     
@@ -23,8 +27,7 @@ class InputText:
     def __init__(self):
         self.text = ""
         self.nodes = []
-        self.jd = Jamdict()
-    
+        self.jd = Jamdict() 
     def update(self, new_text: str):
         self.text = new_text
 
@@ -62,6 +65,7 @@ class InputText:
             lemma = word.feature[6]
             #conj_type = word.feature[5]
             definition, reading = self.get_definition_and_reading(lemma, pos)
+
             
             node = WordNode(word.surface, lemma, word.is_unk, definition, reading)
             self.nodes.append(node)
