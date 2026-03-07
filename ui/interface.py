@@ -15,7 +15,7 @@ from utils.db import engine, texts_engine
 from sqlmodel import Session
 from datetime import date, timedelta
 
-from py_ankiconnect import PyAnkiconnect
+
 
 
 
