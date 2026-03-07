@@ -28,7 +28,7 @@ https://github.com/user-attachments/assets/ab5682b7-5a06-4862-9677-429c12f8a251
 Clone the repository and create a virtual environment:
 
 ```bash
-git clone https://github.com/yourusername/kotobuddy.git
+git clone https://github.com/aegio22/kotobuddy.git
 cd kotobuddy
 python3 -m venv .venv
 source .venv/bin/activate
